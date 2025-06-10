@@ -51,6 +51,7 @@
             font-family: 'Kanit', sans-serif;
             transition: all 0.2s ease-in-out;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            display: block; /* Ensures the link takes up the full width */
         }
         .button:hover {
             transform: translateY(-3px);
@@ -62,6 +63,9 @@
         .admin {
             background: linear-gradient(90deg, #34a853 65%, #81c784 100%);
         }
+        .sheets {
+            background: linear-gradient(90deg, #607d8b 65%, #90a4ae 100%);
+        }
     </style>
 </head>
 <body>
@@ -70,6 +74,7 @@
         <div class="button-group">
             <a href="student-evaluation.html" class="button student">สำหรับนักเรียน: ทำแบบประเมิน</a>
             <a href="manage-instructors.html" class="button admin">สำหรับแอดมิน: จัดการข้อมูลผู้สอน</a>
+            <a href="https://docs.google.com/spreadsheets/d/1CBVFQ2_U9nU6fnMhcRjNXG4duBSpLTYvBWLiT3AiJCI/edit?gid=1764500024#gid=1764500024" target="_blank" class="button sheets">ดูข้อมูลสรุป (Google Sheet)</a>
         </div>
     </div>
 </body>
