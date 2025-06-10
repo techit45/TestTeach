@@ -11,12 +11,17 @@
       background: #f7fafd; 
       margin: 0; 
       min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1em 0;
     }
     .container { 
       background: #fff; 
       padding: 2em; 
       border-radius: 18px; 
       max-width: 600px; 
+      width: 95%;
       margin: 2em auto; 
       box-shadow: 0 8px 36px rgba(44, 62, 80, 0.11);
     }
@@ -37,6 +42,7 @@
     }
     select, input[type="text"], textarea { 
       width: 100%; 
+      box-sizing: border-box;
       padding: 0.7em; 
       border: 1.5px solid #b0bec5; 
       border-radius: 6px; 
@@ -50,15 +56,18 @@
     }
     .rating-group { 
       display: flex; 
-      justify-content: space-between; 
+      justify-content: space-around; 
+      flex-wrap: wrap;
       margin: 1em 0;
+      gap: 10px;
     }
     .rating-option { 
-      flex: 1; 
-      text-align: center;
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
     }
     .rating-option input { 
-      margin-bottom: 0.5em;
+      margin-bottom: 0;
     }
     button[type="submit"] { 
       width: 100%; 
@@ -71,6 +80,7 @@
       cursor: pointer; 
       font-family: inherit; 
       font-weight: 600;
+      transition: background-color 0.3s;
     }
     button[type="submit"]:disabled { 
       background: #b0bec5;
@@ -84,6 +94,7 @@
       border-radius: 7px; 
       margin-top: 1em; 
       display: none;
+      text-align: center;
     }
     .success-msg { 
       text-align: center; 
@@ -98,17 +109,8 @@
         margin: 1em; 
         padding: 1.5em;
       }
-      .rating-group { 
-        flex-direction: column; 
-        gap: 0.5em;
-      }
-      .rating-option { 
-        display: flex; 
-        align-items: center;
-        gap: 1em;
-      }
-      .rating-option input { 
-        margin: 0;
+      .rating-group {
+        justify-content: flex-start;
       }
     }
   </style>
@@ -147,142 +149,38 @@
       
       <div class="form-group">
         <label>ผู้สอน 1</label>
-        <input type="text" id="instructor1" readonly>
+        <input type="text" id="instructor1" readonly style="background-color: #f0f0f0;">
       </div>
       
       <div class="form-group">
         <label>ผู้สอน 2</label>
-        <input type="text" id="instructor2" readonly>
+        <input type="text" id="instructor2" readonly style="background-color: #f0f0f0;">
       </div>
 
+      <!-- Rating Sections -->
       <div class="form-group">
         <label>1. ความชัดเจนในการสอน</label>
-        <div class="rating-group">
-          <div class="rating-option">
-            <input type="radio" name="clarity" value="1" required>
-            <span>น้อยที่สุด</span>
-          </div>
-          <div class="rating-option">
-            <input type="radio" name="clarity" value="2">
-            <span>น้อย</span>
-          </div>
-          <div class="rating-option">
-            <input type="radio" name="clarity" value="3">
-            <span>ปานกลาง</span>
-          </div>
-          <div class="rating-option">
-            <input type="radio" name="clarity" value="4">
-            <span>มาก</span>
-          </div>
-          <div class="rating-option">
-            <input type="radio" name="clarity" value="5">
-            <span>มากที่สุด</span>
-          </div>
-        </div>
+        <div class="rating-group" id="clarity_rating"></div>
       </div>
 
       <div class="form-group">
         <label>2. การเตรียมการสอน</label>
-        <div class="rating-group">
-          <div class="rating-option">
-            <input type="radio" name="preparation" value="1" required>
-            <span>น้อยที่สุด</span>
-          </div>
-          <div class="rating-option">
-            <input type="radio" name="preparation" value="2">
-            <span>น้อย</span>
-          </div>
-          <div class="rating-option">
-            <input type="radio" name="preparation" value="3">
-            <span>ปานกลาง</span>
-          </div>
-          <div class="rating-option">
-            <input type="radio" name="preparation" value="4">
-            <span>มาก</span>
-          </div>
-          <div class="rating-option">
-            <input type="radio" name="preparation" value="5">
-            <span>มากที่สุด</span>
-          </div>
-        </div>
+        <div class="rating-group" id="preparation_rating"></div>
       </div>
 
       <div class="form-group">
         <label>3. การมีปฏิสัมพันธ์กับผู้เรียน</label>
-        <div class="rating-group">
-          <div class="rating-option">
-            <input type="radio" name="interaction" value="1" required>
-            <span>น้อยที่สุด</span>
-          </div>
-          <div class="rating-option">
-            <input type="radio" name="interaction" value="2">
-            <span>น้อย</span>
-          </div>
-          <div class="rating-option">
-            <input type="radio" name="interaction" value="3">
-            <span>ปานกลาง</span>
-          </div>
-          <div class="rating-option">
-            <input type="radio" name="interaction" value="4">
-            <span>มาก</span>
-          </div>
-          <div class="rating-option">
-            <input type="radio" name="interaction" value="5">
-            <span>มากที่สุด</span>
-          </div>
-        </div>
+        <div class="rating-group" id="interaction_rating"></div>
       </div>
 
       <div class="form-group">
         <label>4. การตรงต่อเวลา</label>
-        <div class="rating-group">
-          <div class="rating-option">
-            <input type="radio" name="punctuality" value="1" required>
-            <span>น้อยที่สุด</span>
-          </div>
-          <div class="rating-option">
-            <input type="radio" name="punctuality" value="2">
-            <span>น้อย</span>
-          </div>
-          <div class="rating-option">
-            <input type="radio" name="punctuality" value="3">
-            <span>ปานกลาง</span>
-          </div>
-          <div class="rating-option">
-            <input type="radio" name="punctuality" value="4">
-            <span>มาก</span>
-          </div>
-          <div class="rating-option">
-            <input type="radio" name="punctuality" value="5">
-            <span>มากที่สุด</span>
-          </div>
-        </div>
+        <div class="rating-group" id="punctuality_rating"></div>
       </div>
-
+      
       <div class="form-group">
         <label>5. ความพึงพอใจโดยรวม</label>
-        <div class="rating-group">
-          <div class="rating-option">
-            <input type="radio" name="satisfaction" value="1" required>
-            <span>น้อยที่สุด</span>
-          </div>
-          <div class="rating-option">
-            <input type="radio" name="satisfaction" value="2">
-            <span>น้อย</span>
-          </div>
-          <div class="rating-option">
-            <input type="radio" name="satisfaction" value="3">
-            <span>ปานกลาง</span>
-          </div>
-          <div class="rating-option">
-            <input type="radio" name="satisfaction" value="4">
-            <span>มาก</span>
-          </div>
-          <div class="rating-option">
-            <input type="radio" name="satisfaction" value="5">
-            <span>มากที่สุด</span>
-          </div>
-        </div>
+        <div class="rating-group" id="satisfaction_rating"></div>
       </div>
 
       <div class="form-group">
@@ -298,32 +196,41 @@
   </div>
 
 <script>
+// --- CONFIGURATION ---
+// !!! สำคัญ: กรุณาเปลี่ยน URL นี้เป็น URL ของ Google Apps Script Web App ของคุณ
 const API_URL = 'https://script.google.com/macros/s/AKfycbxI1-QQAoSNJa-o_sM3v8ak6x4KxTRybpMjDcX0vrWH6fiUrU-LiuM9KoNm3J8bIMSC/exec';
 
+// --- DATA ---
 const centers = ['ลาดกระบัง', 'บางพลัด', 'ระยอง', 'ศรีราชา'];
-const weeks = [1,2,3,4,5,6,7,8];
-const days = ['เสาร์','อาทิตย์'];
-const periods = ['เช้า','บ่าย'];
+const weeks = [1, 2, 3, 4, 5, 6, 7, 8];
+const days = ['เสาร์', 'อาทิตย์'];
+const periods = ['เช้า', 'บ่าย'];
+const ratingCategories = [
+    { id: 'clarity', label: 'ความชัดเจนในการสอน' },
+    { id: 'preparation', label: 'การเตรียมการสอน' },
+    { id: 'interaction', label: 'การมีปฏิสัมพันธ์กับผู้เรียน' },
+    { id: 'punctuality', label: 'การตรงต่อเวลา' },
+    { id: 'satisfaction', label: 'ความพึงพอใจโดยรวม' }
+];
+const ratingLabels = ['น้อยที่สุด', 'น้อย', 'ปานกลาง', 'มาก', 'มากที่สุด'];
 
 let instructorsMap = {};
 
-function populateSelects() {
-  const centerSelect = document.getElementById('center');
-  const weekSelect = document.getElementById('week');
-  const daySelect = document.getElementById('day');
-  const periodSelect = document.getElementById('period');
-  
-  centerSelect.innerHTML = '<option value="">เลือกศูนย์</option>' + 
-    centers.map(c => `<option value="${c}">${c}</option>`).join('');
-  
-  weekSelect.innerHTML = '<option value="">เลือกสัปดาห์</option>' + 
-    weeks.map(w => `<option value="${w}">${w}</option>`).join('');
-  
-  daySelect.innerHTML = '<option value="">เลือกวัน</option>' + 
-    days.map(d => `<option value="${d}">${d}</option>`).join('');
-  
-  periodSelect.innerHTML = '<option value="">เลือกช่วงเวลา</option>' + 
-    periods.map(p => `<option value="${p}">${p}</option>`).join('');
+// --- FUNCTIONS ---
+function populateSelect(elementId, options, placeholder) {
+    const select = document.getElementById(elementId);
+    select.innerHTML = `<option value="">${placeholder}</option>` + 
+        options.map(o => `<option value="${o}">${o}</option>`).join('');
+}
+
+function createRatingOptions(categoryId) {
+    const container = document.getElementById(`${categoryId}_rating`);
+    container.innerHTML = ratingLabels.map((label, index) => `
+        <div class="rating-option">
+            <input type="radio" name="${categoryId}" id="${categoryId}_${index+1}" value="${index+1}" required>
+            <label for="${categoryId}_${index+1}">${label}</label>
+        </div>
+    `).join('');
 }
 
 function updateInstructors() {
@@ -332,60 +239,127 @@ function updateInstructors() {
   const day = document.getElementById('day').value;
   const period = document.getElementById('period').value;
   
-  document.getElementById('instructor1').value = '';
-  document.getElementById('instructor2').value = '';
+  const instructor1Input = document.getElementById('instructor1');
+  const instructor2Input = document.getElementById('instructor2');
+  
+  instructor1Input.value = '';
+  instructor2Input.value = '';
   
   if (center && week && day && period) {
     if (instructorsMap[center]?.[week]?.[day]?.[period]) {
       const data = instructorsMap[center][week][day][period];
-      document.getElementById('instructor1').value = data.instructor1 || '';
-      document.getElementById('instructor2').value = data.instructor2 || '';
+      instructor1Input.value = data.instructor1 || '';
+      instructor2Input.value = data.instructor2 || '';
     }
   }
 }
 
 function fetchInstructors() {
-  fetch(API_URL + '?action=getInstructors')
+  fetch(`${API_URL}?action=getInstructors`)
     .then(r => r.json())
     .then(data => {
       if (data.status === 'success') {
         instructorsMap = data.data || {};
         updateInstructors();
       } else {
-        throw new Error(data.message || 'โหลดข้อมูลไม่สำเร็จ');
+        throw new Error(data.message || 'โหลดข้อมูลผู้สอนไม่สำเร็จ');
       }
     })
     .catch(error => {
-      document.getElementById('errorMsg').textContent = error.message;
-      document.getElementById('errorMsg').style.display = '';
+      const errorMsg = document.getElementById('errorMsg');
+      errorMsg.textContent = `เกิดข้อผิดพลาด: ${error.message}`;
+      errorMsg.style.display = 'block';
     });
 }
 
-document.getElementById('center').addEventListener('change', updateInstructors);
-document.getElementById('week').addEventListener('change', updateInstructors);
-document.getElementById('day').addEventListener('change', updateInstructors);
-document.getElementById('period').addEventListener('change', updateInstructors);
+// --- EVENT LISTENERS AND INITIALIZATION ---
+document.addEventListener('DOMContentLoaded', () => {
+    // Populate dropdowns
+    populateSelect('center', centers, 'เลือกศูนย์');
+    populateSelect('week', weeks, 'เลือกสัปดาห์');
+    populateSelect('day', days, 'เลือกวัน');
+    populateSelect('period', periods, 'เลือกช่วงเวลา');
 
-document.getElementById('evaluationForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  
-  const errorMsg = document.getElementById('errorMsg');
-  const successMsg = document.getElementById('successMsg');
-  errorMsg.style.display = 'none';
-  successMsg.style.display = 'none';
-  
-  const center = document.getElementById('center').value;
-  const week = document.getElementById('week').value;
-  const day = document.getElementById('day').value;
-  const period = document.getElementById('period').value;
-  const instructor1 = document.getElementById('instructor1').value;
-  const instructor2 = document.getElementById('instructor2').value;
-  
-  if (!instructor1 && !instructor2) {
-    errorMsg.textContent = 'กรุณาเลือกศูนย์/สัปดาห์/วัน/เวลา ที่มีผู้สอน';
-    errorMsg.style.display = '';
-    return;
-  }
-  
-  const clarity = document.querySelector('input[name="clarity"]:checked')?.value;
-  const preparation = document.querySelector
+    // Create rating options
+    ratingCategories.forEach(cat => createRatingOptions(cat.id));
+
+    // Add event listeners to dropdowns
+    ['center', 'week', 'day', 'period'].forEach(id => {
+        document.getElementById(id).addEventListener('change', updateInstructors);
+    });
+
+    // Fetch initial instructor data
+    fetchInstructors();
+
+    // Handle form submission
+    document.getElementById('evaluationForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const errorMsg = document.getElementById('errorMsg');
+        const successMsg = document.getElementById('successMsg');
+        const submitBtn = e.target.querySelector('button[type="submit"]');
+        errorMsg.style.display = 'none';
+
+        const payload = {
+            action: 'submitEvaluation',
+            center: document.getElementById('center').value,
+            week: document.getElementById('week').value,
+            day: document.getElementById('day').value,
+            period: document.getElementById('period').value,
+            instructor1: document.getElementById('instructor1').value,
+            instructor2: document.getElementById('instructor2').value,
+            comment: document.getElementById('comment').value,
+        };
+        
+        // Add ratings to payload
+        let allRatingsProvided = true;
+        ratingCategories.forEach(cat => {
+            const checkedRadio = document.querySelector(`input[name="${cat.id}"]:checked`);
+            if (checkedRadio) {
+                payload[cat.id] = checkedRadio.value;
+            } else {
+                allRatingsProvided = false;
+            }
+        });
+
+        if (!payload.instructor1 && !payload.instructor2) {
+            errorMsg.textContent = 'กรุณาเลือกศูนย์/สัปดาห์/วัน/เวลา ที่มีตารางสอน';
+            errorMsg.style.display = 'block';
+            return;
+        }
+
+        if (!allRatingsProvided) {
+            errorMsg.textContent = 'กรุณาให้คะแนนให้ครบทุกหัวข้อ';
+            errorMsg.style.display = 'block';
+            return;
+        }
+        
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'กำลังส่งข้อมูล...';
+
+        fetch(API_URL, {
+            method: 'POST',
+            body: JSON.stringify(payload)
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.status === 'success') {
+                document.getElementById('evaluationForm').style.display = 'none';
+                successMsg.style.display = 'block';
+            } else {
+                throw new Error(data.message || 'ส่งข้อมูลไม่สำเร็จ');
+            }
+        })
+        .catch(error => {
+            errorMsg.textContent = 'เกิดข้อผิดพลาด: ' + error.message;
+            errorMsg.style.display = 'block';
+        })
+        .finally(() => {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'ส่งแบบประเมิน';
+        });
+    });
+});
+</script>
+</body>
+</html>
