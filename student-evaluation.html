@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>แบบประเมินผู้สอน (นักเรียน)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@400;600&display=swap');
+    body {
+      font-family: 'Kanit', Tahoma, Arial, sans-serif;
+      margin: 0;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 490px;
+      margin: 3em auto;
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 8px 36px rgba(44, 62, 80, 0.09);
+      padding: 2.5em 2em 2em 2em;
+      position:relative;
+    }
+    h2 {
+      text-align: center;
+      font-weight: 600;
+      color: #2d87f0;
+      margin-top: 0.5em;
+      margin-bottom: 1.25em;
+      letter-spacing: 0.5px;
+      font-size: 2em;
+    }
+    label {
+      display: block;
+      margin-top: 1.2em;
+      font-weight: 500;
+      color: #365b7c;
+    }
+    select, input[type="number"], input[type="text"] {
+      width: 100%;
+      padding: 0.6em;
+      border-radius: 6px;
+      border: 1.5px solid #b9c6d1;
+      margin-top: 0.25em;
+      font-size: 1em;
+      background: #f6fafd;
+      transition: border 0.2s;
+    }
+    select:focus, input[type="number"]:focus, input[type="text"]:focus {
+      border: 1.5px solid #2d87f0;
+      outline: none;
+      background: #eef4fb;
+    }
+    .instructor-block {
+      margin-top: 1.1em;
+      font-size: 1.08em;
+      color: #2d87f0;
+      background: #eaf3fc;
+      padding: 0.8em 1em 0.8em 1.2em;
+      border-radius: 8px;
+      box-shadow: 0 1.5px 7px #e5e9f2;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.4em;
+      margin-bottom: 1.1em;
+    }
+    .instructor-block .icon {
+      font-size: 1.19em;
+      margin-right: 0.2em;
+      color: #155fa0;
+    }
+    .score-group {
+      margin-top: 1.1em;
+      background: #f8fcff;
+      border-radius: 7px;
+      padding: 1.1em 1em 0.5em 1em;
+      box-shadow: 0 0.5px 3px #e9ecf2;
+    }
+    .score-label {
+      margin-bottom: 0.25em;
+      color: #1e5a8a;
+      font-size: 1em;
+    }
+    .star-select {
+      margin: 0.2em 0 1em 0;
+      display: flex;
+      gap: 0.7em;
+      align-items: center;
+    }
+    .star-select input[type="radio"] {
+      accent-color: #2d87f0;
+      margin-right: 0.22em;
+    }
+    button[type="submit"] {
+      width: 100%;
+      margin-top: 2.05em;
+      padding: 0.9em 1.5em;
+      border: none;
+      border-radius: 7px;
+      background: linear-gradient(90deg, #2d87f0 65%, #5ad4fc 100%);
+      color: #fff;
+      font-size: 1.17em;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 18px rgba(45,135,240,0.09);
+      transition: background 0.17s, transform 0.1s;
+      letter-spacing: 0.7px;
+    }
+    button[type="submit"]:hover {
+      background: linear-gradient(90deg, #2568bb 60%, #34b6e9 100%);
+      transform: translateY(-2px) scale(1.03);
+    }
+    .thanks {
+      text-align: center;
+      font-size: 1.5em;
+      color: #36ab5f;
+      font-weight: 600;
+      margin-top: 3em;
+      animation: fadeIn 0.7s;
+    }
+    .error-msg {
+      color: #d32f2f;
+      background: #ffeaea;
+      border: 1px solid #ef9a9a;
+      padding: 1em 1em 1em 1.7em;
+      border-radius: 7px;
+      margin-top: 1.2em;
+      font-size: 1em;
+      font-weight: 500;
+      display: none;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.97);}
+      to { opacity: 1;}
+    }
+    @media (max-width: 600px) {
+      .container { padding: 1.2em 0.4em 1.8em 0.4em;}
+      h2 { font-size: 1.25em; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>แบบประเมินผู้สอน</h2>
+    <form id="evalForm" autocomplete="off">
+      <label>ศูนย์
+        <select name="center" id="center" required>
+          <option>ลาดกระบัง</option>
+          <option>บางพลัด</option>
+          <option>ระยอง</option>
+          <option>ศรีราชา</option>
+        </select>
+      </label>
+      <label>สัปดาห์
+        <select name="week" id="week" required>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+        </select>
+      </label>
+      <label>วัน
+        <select name="day" id="day" required>
+          <option value="เสาร์">เสาร์</option>
+          <option value="อาทิตย์">อาทิตย์</option>
+        </select>
+      </label>
+      <label>ช่วงเวลา
+        <select name="period" id="period" required>
+          <option value="เช้า">เช้า</option>
+          <option value="บ่าย">บ่าย</option>
+        </select>
+      </label>
+      <div class="instructor-block">
+        <span class="icon">👨‍🏫</span>
+        ผู้สอน: 
+        <span id="instructorName1" style="margin-left:0.7em"></span>
+        <span style="margin: 0 0.5em;">&</span>
+        <span id="instructorName2"></span>
+      </div>
+      <div class="score-group">
+        <div class="score-label">1. ความชัดเจนในการอธิบาย</div>
+        <div class="star-select">
+          <input type="radio" name="clarity" value="1" required> 1
+          <input type="radio" name="clarity" value="2"> 2
+          <input type="radio" name="clarity" value="3"> 3
+          <input type="radio" name="clarity" value="4"> 4
+          <input type="radio" name="clarity" value="5" checked> 5
+        </div>
+        <div class="score-label">2. การเตรียมเนื้อหาและวัสดุการสอน</div>
+        <div class="star-select">
+          <input type="radio" name="preparation" value="1" required> 1
+          <input type="radio" name="preparation" value="2"> 2
+          <input type="radio" name="preparation" value="3"> 3
+          <input type="radio" name="preparation" value="4"> 4
+          <input type="radio" name="preparation" value="5" checked> 5
+        </div>
+        <div class="score-label">3. การสร้างปฏิสัมพันธ์กับนักเรียน</div>
+        <div class="star-select">
+          <input type="radio" name="interaction" value="1" required> 1
+          <input type="radio" name="interaction" value="2"> 2
+          <input type="radio" name="interaction" value="3"> 3
+          <input type="radio" name="interaction" value="4"> 4
+          <input type="radio" name="interaction" value="5" checked> 5
+        </div>
+        <div class="score-label">4. การตรงต่อเวลา</div>
+        <div class="star-select">
+          <input type="radio" name="punctuality" value="1" required> 1
+          <input type="radio" name="punctuality" value="2"> 2
+          <input type="radio" name="punctuality" value="3"> 3
+          <input type="radio" name="punctuality" value="4"> 4
+          <input type="radio" name="punctuality" value="5" checked> 5
+        </div>
+        <div class="score-label">5. ความพึงพอใจโดยรวม</div>
+        <div class="star-select">
+          <input type="radio" name="satisfaction" value="1" required> 1
+          <input type="radio" name="satisfaction" value="2"> 2
+          <input type="radio" name="satisfaction" value="3"> 3
+          <input type="radio" name="satisfaction" value="4"> 4
+          <input type="radio" name="satisfaction" value="5" checked> 5
+        </div>
+      </div>
+      <label>ข้อเสนอแนะ (ไม่บังคับ)
+        <input type="text" name="comment" id="commentInput" maxlength="300" placeholder="ข้อเสนอแนะ/ความเห็น (ถ้ามี)">
+      </label>
+      <div class="error-msg" id="errorMsg"></div>
+      <button type="submit" id="submitBtn">ส่งแบบประเมิน</button>
+    </form>
+    <div class="thanks" id="thanksMsg" style="display:none;">
+      ขอบคุณสำหรับการประเมิน!<br>😊
+    </div>
+  </div>
+<script>
+const API_URL = 'https://script.google.com/macros/s/AKfycbympwQXI3JZEuX1bg0ITjO74pHY-ytJ2lqHwSLlacshEcEoywIwdnnXdWjIcFBbs2oi/exec';
+
+let instructorsMap = {};
+
+function displayError(msg) {
+  const err = document.getElementById('errorMsg');
+  err.textContent = msg;
+  err.style.display = '';
+}
+function clearError() {
+  const err = document.getElementById('errorMsg');
+  err.textContent = '';
+  err.style.display = 'none';
+}
+
+function fetchInstructors() {
+  fetch(API_URL + '?action=getInstructors')
+    .then(r => r.json())
+    .then(data => {
+      instructorsMap = data;
+      updateInstructor();
+    })
+    .catch(() => {
+      displayError('ไม่สามารถโหลดข้อมูลผู้สอนได้ กรุณารีเฟรชหน้าหรือแจ้งผู้ดูแล');
+    });
+}
+
+function updateInstructor() {
+  clearError();
+  const center = document.getElementById('center').value;
+  const week = document.getElementById('week').value;
+  const day = document.getElementById('day').value;
+  const period = document.getElementById('period').value;
+
+  let i1 = '-', i2 = '-';
+  if (instructorsMap[center] && instructorsMap[center][week] && instructorsMap[center][week][day] && instructorsMap[center][week][day][period]) {
+    i1 = instructorsMap[center][week][day][period].instructor1 || '-';
+    i2 = instructorsMap[center][week][day][period].instructor2 || '-';
+  }
+  document.getElementById('instructorName1').textContent = i1;
+  document.getElementById('instructorName2').textContent = i2;
+}
+
+['center','week','day','period'].forEach(id => {
+  document.getElementById(id).addEventListener('change', updateInstructor);
+});
+
+document.getElementById('evalForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  clearError();
+
+  const center = document.getElementById('center').value;
+  const week = document.getElementById('week').value;
+  const day = document.getElementById('day').value;
+  const period = document.getElementById('period').value;
+  const instructor1 = document.getElementById('instructorName1').textContent;
+  const instructor2 = document.getElementById('instructorName2').textContent;
+
+  const clarity = this.clarity.value;
+  const preparation = this.preparation.value;
+  const interaction = this.interaction.value;
+  const punctuality = this.punctuality.value;
+  const satisfaction = this.satisfaction.value;
+  const comment = this.comment.value;
+
+  if (!center || !week || !day || !period) {
+    displayError('กรุณาเลือกศูนย์ สัปดาห์ วัน และช่วงเวลา');
+    return false;
+  }
+  if (!instructor1 || !instructor2 || instructor1 === '-' || instructor2 === '-') {
+    displayError('ไม่พบข้อมูลผู้สอน กรุณาตรวจสอบกับผู้ดูแล');
+    return false;
+  }
+
+  document.getElementById('submitBtn').disabled = true;
+  document.getElementById('submitBtn').textContent = 'กำลังส่ง...';
+
+  fetch(API_URL, {
+    method: 'POST',
+    body: JSON.stringify({
+      action: 'submitEvaluation',
+      center, week, day, period,
+      instructor1, instructor2,
+      clarity, preparation, interaction, punctuality, satisfaction,
+      comment
+    })
+  })
+  .then(res => {
+    if (!res.ok) throw new Error('ส่งข้อมูลผิดพลาด');
+    return res.text();
+  })
+  .then(() => {
+    document.getElementById('evalForm').style.display = 'none';
+    document.getElementById('thanksMsg').style.display = '';
+  })
+  .catch(() => {
+    displayError('ส่งข้อมูลไม่สำเร็จ กรุณาลองใหม่ หรือแจ้งผู้ดูแลระบบ');
+  })
+  .finally(() => {
+    document.getElementById('submitBtn').disabled = false;
+    document.getElementById('submitBtn').textContent = 'ส่งแบบประเมิน';
+  });
+});
+
+fetchInstructors();
+</script>
+</body>
+</html>

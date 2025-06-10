@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>จัดการข้อมูลผู้สอน</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@400;600&display=swap');
+    body { font-family: 'Kanit', Tahoma, Arial, sans-serif; background: #f7fafd; margin: 0; min-height:100vh; }
+    .container { background: #fff; padding: 2em 0.7em 2.5em 0.7em; border-radius: 18px; max-width: 1000px; margin: 2.5em auto 2em auto; box-shadow: 0 8px 36px rgba(44, 62, 80, 0.11);}
+    h2 { text-align: center; font-weight: 600; color: #2d87f0; margin-top: 0.1em; margin-bottom: 1.5em;}
+    table { border-collapse: collapse; width: 100%; margin-bottom: 2em;}
+    th, td { border: 1px solid #c3e0f7; padding: 0.5em 0.2em; text-align: center;}
+    th { background: #eaf6fd; color: #1976d2;}
+    tr:nth-child(even) { background: #f7fbff;}
+    input[type="text"] { width: 98%; padding: 0.45em; border-radius: 4px; border: 1.5px solid #b9c6d1; font-size: 1em; background: #fafdff;}
+    select { width: 98%; padding: 0.45em; border-radius: 4px; border: 1.5px solid #b9c6d1; font-size: 1em; background: #fafdff;}
+    input[type="text"]:focus, select:focus { border: 1.5px solid #2d87f0; background: #e9f4fb; outline: none;}
+    button { padding: 0.5em 1.2em; border-radius: 6px; border:none; font-size:1em; cursor:pointer; font-family: 'Kanit',sans-serif;}
+    .add-btn { background: linear-gradient(90deg,#2d87f0 60%,#5ad4fc 100%); color: #fff; font-weight: 600; margin-bottom: 1.5em;}
+    .save-btn { background: #4caf50; color: #fff; font-weight: 600;}
+    .del-btn { background: #e57373; color: #fff;}
+    .success { color: #36ab5f; text-align: center; font-size: 1.17em; font-weight: 600; margin-top: 1.2em; animation: fadeIn 0.7s;}
+    .error-msg { color: #d32f2f; background: #ffeaea; border: 1px solid #ef9a9a; padding: 1em; border-radius: 7px; margin-top: 1.2em; font-size: 1em; font-weight: 500; display: none;}
+    @keyframes fadeIn { from { opacity: 0; transform: scale(0.97);} to { opacity: 1;}}
+    @media (max-width:850px){ .container{padding:1em 0.1em;} table{font-size:0.93em;}}
+    @media (max-width:650px){ table,th,td{font-size:0.81em;} input,select{font-size:0.8em;} }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>จัดการข้อมูลผู้สอนแต่ละศูนย์/สัปดาห์/วัน/เวลา</h2>
+    <button class="add-btn" onclick="addRow()">+ เพิ่มแถว</button>
+    <form id="manageForm" autocomplete="off">
+      <table id="instructorsTable">
+        <thead>
+          <tr>
+            <th>ศูนย์</th>
+            <th>สัปดาห์</th>
+            <th>วัน</th>
+            <th>ช่วงเวลา</th>
+            <th>ผู้สอน 1</th>
+            <th>ผู้สอน 2</th>
+            <th>ลบ</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+      <div class="error-msg" id="errorMsg"></div>
+      <button type="submit" class="save-btn">บันทึกทั้งหมด</button>
+    </form>
+    <div class="success" id="successMsg" style="display:none;">บันทึกสำเร็จ!</div>
+  </div>
+<script>
+const API_URL = 'https://script.google.com/macros/s/AKfycbympwQXI3JZEuX1bg0ITjO74pHY-ytJ2lqHwSLlacshEcEoywIwdnnXdWjIcFBbs2oi/exec';
+
+const centers = ['ลาดกระบัง', 'บางพลัด', 'ระยอง', 'ศรีราชา'];
+const weeks = [1,2,3,4,5,6,7,8];
+const days = ['เสาร์','อาทิตย์'];
+const periods = ['เช้า','บ่าย'];
+
+let instructorsList = [];
+
+function displayError(msg) {
+  const err = document.getElementById('errorMsg');
+  err.textContent = msg;
+  err.style.display = '';
+}
+function clearError() {
+  const err = document.getElementById('errorMsg');
+  err.textContent = '';
+  err.style.display = 'none';
+}
+
+function renderTable() {
+  const tbody = document.getElementById('tableBody');
+  tbody.innerHTML = '';
+  if (instructorsList.length === 0) addRow();
+  instructorsList.forEach((row, idx) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>
+        <select name="center">${centers.map(c=>`<option${row.center===c?' selected':''}>${c}</option>`)}</select>
+      </td>
+      <td>
+        <select name="week">${weeks.map(w=>`<option${row.week==w?' selected':''}>${w}</option>`)}</select>
+      </td>
+      <td>
+        <select name="day">${days.map(d=>`<option${row.day===d?' selected':''}>${d}</option>`)}</select>
+      </td>
+      <td>
+        <select name="period">${periods.map(p=>`<option${row.period===p?' selected':''}>${p}</option>`)}</select>
+      </td>
+      <td>
+        <input type="text" name="instructor1" value="${row.instructor1||''}" autocomplete="off">
+      </td>
+      <td>
+        <input type="text" name="instructor2" value="${row.instructor2||''}" autocomplete="off">
+      </td>
+      <td>
+        <button type="button" class="del-btn" onclick="deleteRow(${idx})">ลบ</button>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+window.addRow = function() {
+  instructorsList.push({center: centers[0], week: 1, day: days[0], period: periods[0], instructor1: '', instructor2: ''});
+  renderTable();
+};
+window.deleteRow = function(idx) {
+  if (instructorsList.length <= 1) return;
+  instructorsList.splice(idx,1);
+  renderTable();
+};
+
+function fetchInstructors() {
+  fetch(API_URL + '?action=getInstructors')
+    .then(r => r.json())
+    .then(data => {
+      instructorsList = [];
+      Object.entries(data).forEach(([center, weeksObj]) => {
+        Object.entries(weeksObj).forEach(([week, daysObj]) => {
+          Object.entries(daysObj).forEach(([day, periodsObj]) => {
+            Object.entries(periodsObj).forEach(([period, persons]) => {
+              instructorsList.push({
+                center, week, day, period,
+                instructor1: persons.instructor1||'',
+                instructor2: persons.instructor2||''
+              });
+            });
+          });
+        });
+      });
+      renderTable();
+    })
+    .catch(() => {
+      displayError('โหลดข้อมูลไม่สำเร็จ');
+      instructorsList = [];
+      renderTable();
+    });
+}
+
+document.getElementById('manageForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  clearError();
+  const rows = Array.from(document.getElementById('tableBody').children);
+  let newList = [];
+  for(let tr of rows){
+    let center = tr.querySelector('[name="center"]').value;
+    let week = tr.querySelector('[name="week"]').value;
+    let day = tr.querySelector('[name="day"]').value;
+    let period = tr.querySelector('[name="period"]').value;
+    let instructor1 = tr.querySelector('[name="instructor1"]').value.trim();
+    let instructor2 = tr.querySelector('[name="instructor2"]').value.trim();
+    if (!center || !week || !day || !period) {
+      displayError('กรุณากรอกข้อมูลให้ครบ');
+      return false;
+    }
+    newList.push({center, week, day, period, instructor1, instructor2});
+  }
+  let instructorsMap = {};
+  newList.forEach(row => {
+    if (!instructorsMap[row.center]) instructorsMap[row.center] = {};
+    if (!instructorsMap[row.center][row.week]) instructorsMap[row.center][row.week] = {};
+    if (!instructorsMap[row.center][row.week][row.day]) instructorsMap[row.center][row.week][row.day] = {};
+    instructorsMap[row.center][row.week][row.day][row.period] = {
+      instructor1: row.instructor1, instructor2: row.instructor2
+    };
+  });
+
+  document.querySelector('.save-btn').disabled = true;
+  document.querySelector('.save-btn').textContent = 'กำลังบันทึก...';
+
+  fetch(API_URL, {
+    method: 'POST',
+    body: JSON.stringify({
+      action: 'updateInstructors',
+      instructorsMap
+    })
+  })
+  .then(res => {
+    if (!res.ok) throw new Error('บันทึกไม่สำเร็จ');
+    return res.text();
+  })
+  .then(() => {
+    document.getElementById('successMsg').style.display = '';
+    setTimeout(()=>document.getElementById('successMsg').style.display='none', 1800);
+    fetchInstructors();
+  })
+  .catch(() => {
+    displayError('บันทึกข้อมูลไม่สำเร็จ กรุณาลองใหม่ หรือแจ้งผู้ดูแลระบบ');
+  })
+  .finally(() => {
+    document.querySelector('.save-btn').disabled = false;
+    document.querySelector('.save-btn').textContent = 'บันทึกทั้งหมด';
+  });
+});
+
+fetchInstructors();
+</script>
+</body>
+</html>
