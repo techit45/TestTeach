@@ -6,149 +6,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@400;600&display=swap');
-    body { 
-      font-family: 'Kanit', Tahoma, Arial, sans-serif; 
-      background: #f7fafd; 
-      margin: 0; 
-      padding: 1em 0;
-      min-height:100vh; 
-    }
-    .container { 
-      background: #fff; 
-      padding: 2em;
-      border-radius: 18px; 
-      max-width: 1000px; 
-      width: 95%;
-      margin: 2em auto; 
-      box-shadow: 0 8px 36px rgba(44, 62, 80, 0.11);
-    }
-    h2 { 
-      text-align: center; 
-      font-weight: 600; 
-      color: #2d87f0; 
-      margin-top: 0.1em; 
-      margin-bottom: 1.5em;
-    }
-    .controls {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1.5em;
-      flex-wrap: wrap;
-      gap: 1em;
-    }
-    table { 
-      border-collapse: collapse; 
-      width: 100%; 
-      margin-bottom: 2em;
-    }
-    th, td { 
-      border: 1px solid #c3e0f7; 
-      padding: 0.7em 0.4em; 
-      text-align: center;
-    }
-    th { 
-      background: #eaf6fd; 
-      color: #1976d2;
-    }
-    tr:nth-child(even) { 
-      background: #f7fbff;
-    }
-    input[type="text"], select { 
-      width: 98%; 
-      padding: 0.5em; 
-      border-radius: 4px; 
-      border: 1.5px solid #b9c6d1; 
-      font-size: 1em;
-      font-family: 'Kanit', sans-serif;
-      box-sizing: border-box;
-      background: #fafdff;
-    }
-    input[type="text"]:focus, select:focus { 
-      border-color: #2d87f0; 
-      background: #e9f4fb; 
-      outline: none;
-    }
-    button { 
-      padding: 0.6em 1.2em; 
-      border-radius: 6px; 
-      border:none; 
-      font-size:1em; 
-      cursor:pointer; 
-      font-family: 'Kanit',sans-serif;
-      transition: all 0.2s;
-    }
-    .add-btn { 
-      background: linear-gradient(90deg,#2d87f0 60%,#5ad4fc 100%); 
-      color: #fff; 
-      font-weight: 600;
-    }
-    .save-btn { 
-      background: #4caf50; 
-      color: #fff; 
-      font-weight: 600;
-    }
-    .save-btn:disabled {
-        background-color: #aaa;
-        cursor: not-allowed;
-    }
-    .del-btn { 
-      background: #e57373; 
-      color: #fff;
-    }
-    .move-btn {
-      background: #78909c;
-      color: white;
-      padding: 0.3em 0.6em;
-      margin: 0 0.2em;
-      font-size: 0.9em;
-    }
-    .move-btn:disabled, .del-btn:disabled {
-      background: #cfd8dc;
-      cursor: not-allowed;
-    }
-    #message-box {
-        padding: 1em;
-        border-radius: 7px;
-        margin-top: 1.2em;
-        font-size: 1em;
-        font-weight: 500;
-        display: none;
-        text-align: center;
-    }
-    .success {
-        color: #36ab5f;
-        background-color: #e8f5e9;
-        border: 1px solid #a5d6a7;
-    }
-    .error {
-        color: #d32f2f;
-        background: #ffeaea;
-        border: 1px solid #ef9a9a;
-    }
-    #loading-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(255, 255, 255, 0.7);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 1.5em;
-        color: #2d87f0;
-        z-index: 1000;
-        display: none;
-    }
-    @media (max-width:850px){ 
-      .container{padding:1em;} 
-      table{font-size:0.93em;}
-    }
-    @media (max-width:650px){ 
-      table,th,td{font-size:0.81em;} 
-      input,select{font-size:0.8em;} 
-    }
+    body { font-family: 'Kanit', sans-serif; background: #f7fafd; margin: 0; padding: 1em 0; min-height:100vh; }
+    .container { background: #fff; padding: 2em; border-radius: 18px; max-width: 1000px; width: 95%; margin: 2em auto; box-shadow: 0 8px 36px rgba(44, 62, 80, 0.11); }
+    h2 { text-align: center; font-weight: 600; color: #2d87f0; margin-top: 0.1em; margin-bottom: 1.5em; }
+    .controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5em; flex-wrap: wrap; gap: 1em; }
+    table { border-collapse: collapse; width: 100%; margin-bottom: 2em; }
+    th, td { border: 1px solid #c3e0f7; padding: 0.7em 0.4em; text-align: center; }
+    th { background: #eaf6fd; color: #1976d2; }
+    tr:nth-child(even) { background: #f7fbff; }
+    input[type="text"], select { width: 98%; padding: 0.5em; border-radius: 4px; border: 1.5px solid #b9c6d1; font-size: 1em; font-family: 'Kanit', sans-serif; box-sizing: border-box; background: #fafdff; }
+    input:focus, select:focus { border-color: #2d87f0; background: #e9f4fb; outline: none; }
+    button { padding: 0.6em 1.2em; border-radius: 6px; border:none; font-size:1em; cursor:pointer; font-family: 'Kanit',sans-serif; transition: all 0.2s; }
+    .add-btn { background: linear-gradient(90deg,#2d87f0 60%,#5ad4fc 100%); color: #fff; font-weight: 600; }
+    .save-btn { background: #4caf50; color: #fff; font-weight: 600; }
+    .del-btn { background: #e57373; color: #fff; }
+    .move-btn { background: #78909c; color: white; padding: 0.3em 0.6em; margin: 0 0.2em; font-size: 0.9em; }
+    button:disabled { background: #cfd8dc; cursor: not-allowed; }
+    #message-box { padding: 1em; border-radius: 7px; margin-top: 1.2em; font-weight: 500; display: none; text-align: center; }
+    .success { color: #36ab5f; background-color: #e8f5e9; border: 1px solid #a5d6a7; }
+    .error { color: #d32f2f; background: #ffeaea; border: 1px solid #ef9a9a; }
+    #loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(255, 255, 255, 0.7); display: flex; justify-content: center; align-items: center; font-size: 1.5em; color: #2d87f0; z-index: 1000; display: none; }
+    @media (max-width:850px){ .container{padding:1em;} table{font-size:0.93em;} }
   </style>
 </head>
 <body>
@@ -163,15 +41,7 @@
     <form id="manageForm" autocomplete="off">
       <table id="instructorsTable">
         <thead>
-          <tr>
-            <th>ศูนย์</th>
-            <th>สัปดาห์</th>
-            <th>วัน</th>
-            <th>ช่วงเวลา</th>
-            <th>ผู้สอน 1</th>
-            <th>ผู้สอน 2</th>
-            <th>จัดการ</th>
-          </tr>
+          <tr><th>ศูนย์</th><th>สัปดาห์</th><th>วัน</th><th>ช่วงเวลา</th><th>ผู้สอน 1</th><th>ผู้สอน 2</th><th>จัดการ</th></tr>
         </thead>
         <tbody id="tableBody"></tbody>
       </table>
@@ -180,200 +50,85 @@
   </div>
 
 <script>
-// --- CONFIGURATION ---
-// !!! สำคัญ: กรุณาเปลี่ยน URL นี้เป็น URL ของ Google Apps Script Web App ของคุณ
 const API_URL = 'https://script.google.com/macros/s/AKfycbxI1-QQAoSNJa-o_sM3v8ak6x4KxTRybpMjDcX0vrWH6fiUrU-LiuM9KoNm3J8bIMSC/exec';
-
-// --- DATA ---
-const centers = ['ลาดกระบัง', 'บางพลัด', 'ระยอง', 'ศรีราชา'];
-const weeks = [1, 2, 3, 4, 5, 6, 7, 8];
-const days = ['เสาร์', 'อาทิตย์'];
-const periods = ['เช้า', 'บ่าย'];
+const centers = ['ลาดกระบัง', 'บางพลัด', 'ระยอง', 'ศรีราชา'], weeks = [1, 2, 3, 4, 5, 6, 7, 8], days = ['เสาร์', 'อาทิตย์'], periods = ['เช้า', 'บ่าย'];
 let instructorsList = [];
 
-// --- UI FUNCTIONS ---
-const loadingOverlay = document.getElementById('loading-overlay');
-const messageBox = document.getElementById('message-box');
-
-function showLoading(show) {
-    loadingOverlay.style.display = show ? 'flex' : 'none';
-}
-
+const loadingOverlay = document.getElementById('loading-overlay'), messageBox = document.getElementById('message-box');
+function showLoading(show) { loadingOverlay.style.display = show ? 'flex' : 'none'; }
 function showMessage(type, message) {
-    messageBox.className = type;
-    messageBox.textContent = message;
-    messageBox.style.display = 'block';
+    messageBox.className = type; messageBox.textContent = message; messageBox.style.display = 'block';
     setTimeout(() => { messageBox.style.display = 'none'; }, 3000);
 }
 
 function renderTable() {
     const tbody = document.getElementById('tableBody');
-    tbody.innerHTML = '';
-    
-    if (instructorsList.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="7">ไม่พบข้อมูล, กรุณากด "+ เพิ่มแถวใหม่" เพื่อเริ่มต้น</td></tr>';
-        return;
-    }
-  
-    instructorsList.forEach((row, idx) => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-            <td>
-                <select name="center">${centers.map(c => `<option value="${c}"${row.center === c ? ' selected' : ''}>${c}</option>`).join('')}</select>
-            </td>
-            <td>
-                <select name="week">${weeks.map(w => `<option value="${w}"${row.week == w ? ' selected' : ''}>${w}</option>`).join('')}</select>
-            </td>
-            <td>
-                <select name="day">${days.map(d => `<option value="${d}"${row.day === d ? ' selected' : ''}>${d}</option>`).join('')}</select>
-            </td>
-            <td>
-                <select name="period">${periods.map(p => `<option value="${p}"${row.period === p ? ' selected' : ''}>${p}</option>`).join('')}</select>
-            </td>
-            <td><input type="text" name="instructor1" value="${row.instructor1 || ''}" autocomplete="off"></td>
-            <td><input type="text" name="instructor2" value="${row.instructor2 || ''}" autocomplete="off"></td>
+    tbody.innerHTML = instructorsList.length === 0 ? '<tr><td colspan="7">ไม่พบข้อมูล, กด "+ เพิ่มแถวใหม่" เพื่อเริ่มต้น</td></tr>' :
+    instructorsList.map((row, idx) => `
+        <tr>
+            <td><select name="center">${centers.map(c => `<option value="${c}"${row.center === c ? ' selected' : ''}>${c}</option>`).join('')}</select></td>
+            <td><select name="week">${weeks.map(w => `<option value="${w}"${row.week == w ? ' selected' : ''}>${w}</option>`).join('')}</select></td>
+            <td><select name="day">${days.map(d => `<option value="${d}"${row.day === d ? ' selected' : ''}>${d}</option>`).join('')}</select></td>
+            <td><select name="period">${periods.map(p => `<option value="${p}"${row.period === p ? ' selected' : ''}>${p}</option>`).join('')}</select></td>
+            <td><input type="text" name="instructor1" value="${row.instructor1 || ''}"></td>
+            <td><input type="text" name="instructor2" value="${row.instructor2 || ''}"></td>
             <td>
                 <button type="button" class="del-btn" onclick="deleteRow(${idx})">ลบ</button>
                 <button type="button" class="move-btn" onclick="moveRow(${idx}, -1)" ${idx === 0 ? 'disabled' : ''}>↑</button>
                 <button type="button" class="move-btn" onclick="moveRow(${idx}, 1)" ${idx === instructorsList.length - 1 ? 'disabled' : ''}>↓</button>
             </td>
-        `;
-        tbody.appendChild(tr);
-    });
+        </tr>`).join('');
 }
 
-// --- DATA MANIPULATION ---
-window.addRow = function() {
-    if(instructorsList.length === 0) {
-        instructorsList.push({
-            center: centers[0], week: weeks[0], day: days[0], period: periods[0], instructor1: '', instructor2: ''
-        });
-    } else {
-        const lastRow = instructorsList[instructorsList.length - 1];
-        instructorsList.push({ ...lastRow, instructor1: '', instructor2: '' }); // Add a new row based on the last one
-    }
+window.addRow = () => {
+    const newRow = instructorsList.length > 0 ? { ...instructorsList[instructorsList.length-1], instructor1: '', instructor2: '' } : { center: centers[0], week: weeks[0], day: days[0], period: periods[0], instructor1: '', instructor2: '' };
+    instructorsList.push(newRow);
     renderTable();
 };
+window.deleteRow = (idx) => { if (confirm('ยืนยันการลบแถวนี้?')) { instructorsList.splice(idx, 1); renderTable(); } };
+window.moveRow = (idx, dir) => { const newIdx = idx + dir; if (newIdx >= 0 && newIdx < instructorsList.length) { [instructorsList[idx], instructorsList[newIdx]] = [instructorsList[newIdx], instructorsList[idx]]; renderTable(); }};
 
-window.deleteRow = function(idx) {
-    if (confirm('คุณแน่ใจหรือไม่ที่จะลบแถวนี้?')) {
-        instructorsList.splice(idx, 1);
-        renderTable();
-    }
-};
-
-window.moveRow = function(idx, direction) {
-    const newIdx = idx + direction;
-    if (newIdx >= 0 && newIdx < instructorsList.length) {
-        [instructorsList[idx], instructorsList[newIdx]] = [instructorsList[newIdx], instructorsList[idx]]; // Swap elements
-        renderTable();
-    }
-};
-
-// --- API CALLS ---
 function fetchInstructors() {
     showLoading(true);
-    fetch(`${API_URL}?action=getInstructors`)
-        .then(r => {
-            if (!r.ok) throw new Error(`Network response was not ok: ${r.statusText}`);
-            return r.json();
-        })
-        .then(data => {
-            if (data.status !== 'success') throw new Error(data.message || 'รูปแบบข้อมูลจาก Server ไม่ถูกต้อง');
-            
-            instructorsList = [];
-            if (data.data) {
-                Object.entries(data.data).forEach(([center, weeksObj]) => {
-                    Object.entries(weeksObj).forEach(([week, daysObj]) => {
-                        Object.entries(daysObj).forEach(([day, periodsObj]) => {
-                            Object.entries(periodsObj).forEach(([period, persons]) => {
-                                instructorsList.push({
-                                    center, week, day, period,
-                                    instructor1: persons.instructor1 || '',
-                                    instructor2: persons.instructor2 || ''
-                                });
-                            });
-                        });
-                    });
-                });
-            }
-            renderTable();
-        })
-        .catch(error => {
-            showMessage('error', `โหลดข้อมูลไม่สำเร็จ: ${error.message}`);
-            instructorsList = [];
-            renderTable();
-        })
-        .finally(() => showLoading(false));
+    fetch(`${API_URL}?action=getInstructors`).then(r => r.json()).then(data => {
+        if (data.status !== 'success') throw new Error(data.message);
+        instructorsList = [];
+        if (data.data) {
+            Object.entries(data.data).forEach(([c, weeksObj]) => Object.entries(weeksObj).forEach(([w, daysObj]) => Object.entries(daysObj).forEach(([d, pObj]) => Object.entries(pObj).forEach(([p, persons]) => instructorsList.push({ center: c, week: w, day: d, period: p, ...persons })))));
+        }
+        renderTable();
+    }).catch(err => showMessage('error', `โหลดข้อมูลไม่สำเร็จ: ${err.message}`)).finally(() => showLoading(false));
 }
 
-// --- EVENT LISTENERS & INITIALIZATION ---
 document.getElementById('manageForm').addEventListener('submit', function(e) {
     e.preventDefault();
-    messageBox.style.display = 'none';
-  
-    const rows = Array.from(document.getElementById('tableBody').children);
-    let newList = [];
-  
-    for(const tr of rows) {
-        if (tr.children.length < 7) continue; // Skip placeholder row
-        newList.push({
-            center: tr.querySelector('[name="center"]').value,
-            week: tr.querySelector('[name="week"]').value,
-            day: tr.querySelector('[name="day"]').value,
-            period: tr.querySelector('[name="period"]').value,
-            instructor1: tr.querySelector('[name="instructor1"]').value.trim(),
-            instructor2: tr.querySelector('[name="instructor2"]').value.trim(),
-        });
-    }
+    const newList = Array.from(document.querySelectorAll('#tableBody tr')).map(tr => ({
+        center: tr.querySelector('[name=center]').value, week: tr.querySelector('[name=week]').value, day: tr.querySelector('[name=day]').value, period: tr.querySelector('[name=period]').value,
+        instructor1: tr.querySelector('[name=instructor1]').value.trim(), instructor2: tr.querySelector('[name=instructor2]').value.trim()
+    }));
     
-    // Validation
     const seen = new Set();
     for (const row of newList) {
-        if (!row.instructor1 && !row.instructor2) {
-            showMessage('error', `กรุณาระบุผู้สอนอย่างน้อย 1 คนสำหรับ: ${row.center} สัปดาห์ ${row.week} ${row.day} ${row.period}`);
-            return;
-        }
+        if (!row.instructor1 && !row.instructor2) return showMessage('error', `ต้องมีผู้สอนอย่างน้อย 1 คนสำหรับ: ${row.center} สัปดาห์ ${row.week}`);
         const key = `${row.center}-${row.week}-${row.day}-${row.period}`;
-        if (seen.has(key)) {
-            showMessage('error', `พบข้อมูลซ้ำ: ${row.center} สัปดาห์ ${row.week} ${row.day} ${row.period}`);
-            return;
-        }
+        if (seen.has(key)) return showMessage('error', `ข้อมูลซ้ำ: ${row.center} สัปดาห์ ${row.week} ${row.day} ${row.period}`);
         seen.add(key);
     }
   
     let instructorsMap = {};
     newList.forEach(row => {
-        if (!instructorsMap[row.center]) instructorsMap[row.center] = {};
-        if (!instructorsMap[row.center][row.week]) instructorsMap[row.center][row.week] = {};
-        if (!instructorsMap[row.center][row.week][row.day]) instructorsMap[row.center][row.week][row.day] = {};
-        instructorsMap[row.center][row.week][row.day][row.period] = {
-            instructor1: row.instructor1,
-            instructor2: row.instructor2
-        };
+        if (!instructorsMap[row.center]) instructorsMap[row.center] = {}; if (!instructorsMap[row.center][row.week]) instructorsMap[row.center][row.week] = {}; if (!instructorsMap[row.center][row.week][row.day]) instructorsMap[row.center][row.week][row.day] = {};
+        instructorsMap[row.center][row.week][row.day][row.period] = { instructor1: row.instructor1, instructor2: row.instructor2 };
     });
 
-    const saveBtn = document.querySelector('.save-btn');
-    saveBtn.disabled = true;
-    saveBtn.textContent = 'กำลังบันทึก...';
+    const saveBtn = document.querySelector('.save-btn'); saveBtn.disabled = true; saveBtn.textContent = 'กำลังบันทึก...';
 
-    fetch(API_URL, {
-        method: 'POST',
-        body: JSON.stringify({ action: 'updateInstructors', instructorsMap })
-    })
-    .then(res => res.json())
-    .then(data => {
-        if (data.status !== 'success') throw new Error(data.message || 'บันทึกไม่สำเร็จ');
-        showMessage('success', 'บันทึกข้อมูลเรียบร้อยแล้ว!');
-        fetchInstructors(); // Refresh data from server
-    })
-    .catch(error => {
-        showMessage('error', 'บันทึกข้อมูลไม่สำเร็จ: ' + error.message);
-    })
-    .finally(() => {
-        saveBtn.disabled = false;
-        saveBtn.textContent = 'บันทึกข้อมูลทั้งหมด';
-    });
+    fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'updateInstructors', instructorsMap }) })
+    .then(res => res.json()).then(data => {
+        if (data.status !== 'success') throw new Error(data.message);
+        showMessage('success', 'บันทึกข้อมูลเรียบร้อยแล้ว!'); fetchInstructors();
+    }).catch(err => showMessage('error', `บันทึกไม่สำเร็จ: ${err.message}`))
+    .finally(() => { saveBtn.disabled = false; saveBtn.textContent = 'บันทึกข้อมูลทั้งหมด'; });
 });
 
 document.addEventListener('DOMContentLoaded', fetchInstructors);
